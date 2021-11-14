@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>1800-Tech-Tips</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
+    <!-- Material Design Bootstrap -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
+
+    <!-- Firebase 8 CDNs-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <!-- Chart.js -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Our own stuff -->
+    <link rel="stylesheet" href="./styles/my_style.css">
+    <script src="./scripts/firebaseAPI_TEAM99.js"></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="container">
+        <nav class="navbar navbar-light bg-success">
+            <div class="container-fluid">
+                <span class="navbar-brand mb-0 h1">MyApp</span>
+                <span id="name-goes-here"> Friend </span>
+            </div>
+        </nav>
+    </div>
+    <!-- List of Stuff -->
+    <div class="container py-3">
+        <h1>Your week's progress</h1>
+        <div id="graph-goes-here">
+        </div>
+        <div>
+            <canvas id="myChart" width="400" height="400"> </canvas>
+        </div>
+    </div>
+    <!-- end -->
+    <script src='./scripts/my_script.js'></script>
+    <script>
+        function writeSomeData() {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    // User is signed in.
+
+                    var dbref = db.collection("users").doc(user.uid)
+                        .collection("thisWeeksTasks");
+                    dbref.add({
+                        details: "Do comp1800 quiz",
+                        nickname: "1800Quiz",
+                        size: "M",
+                        end_date: firebase.firestore.Timestamp.fromDate(new Date("November 5 ,2021")),
+                        timespent: 20,
+                    })
+                    dbref.add({
+                        details: "Do comp1510 lab",
+                        nickname: "1510Lab",
+                        size: "M",
+                        end_date: firebase.firestore.Timestamp.fromDate(new Date("November 10 ,2021")),
+                        timespent: 30
+                    })
+                    dbref.add({
+                        details: "Do comp1800 sprint1 planning",
+                        nickname: "1800Sprint1",
+                        size: "L",
+                        end_date: firebase.firestore.Timestamp.fromDate(new Date("November 3 ,2021")),
+                        timespent: 20
+                    })
+                    dbref.add({
+                        details: "Do comp1100 journal",
+                        nickname: "1100Journal",
+                        size: "L",
+                        end_date: firebase.firestore.Timestamp.fromDate(new Date("November 5 ,2021")),
+                        timespent: 60
+                    })
+                    dbref.add({
+                        details: "Do comp1113 assignment",
+                        nickname: "1113Asn",
+                        size: "L",
+                        end_date: firebase.firestore.Timestamp.fromDate(new Date("November 8 ,2021")),
+                        timespent: 55
+                    })
+                } else {
+                    // No user is signed in.
+                }
+            });
+        }
+        //writeSomeData();
+
+        function displaySample() {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        //displaySample();
+
+        function testChart() {
+            const labels = [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+            ];
+            const data = {
+                labels: labels,
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                }]
+            };
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+        }
+        //testChart();
+
+        //-----------------------------------
+        // Use Data from Firestore
+        //-----------------------------------
+        function projectChart() {
+            var labels = []; //insert task names
+            var values = []; //insert values
+
+            //read data from Firestore
+            //readData(labels, values);
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    // User is signed in.
+                    db.collection("users").doc(user.uid)
+                        .collection("thisWeeksTasks")
+                        .where("size", "==", "L")
+                        .orderBy("end_date")
+                        .get()
+                        .then(function (snap) {
+                            snap.forEach(function (doc) {
+                                console.log(doc.data()); //just to check
+                                let y = doc.data().timespent; //y-axis
+                                let x = doc.data().nickname; //x-axis
+                                values.push(y);     //timespent display on y
+                                labels.push(x);     //nickname display on x
+                                console.log(labels);
+                                console.log(values);
+                            })
+                            displayGraph(labels, values);
+                        })
+                } else {
+                    // No user signed in. 
+                }
+
+            })
+        }
+        projectChart();
+
+        //---------------------------------------------------------
+        // simply graph the data provided in the input param arrays
+        //---------------------------------------------------------
+        function displayGraph(xlabels, yvalues) {
+            var grapharea = document.getElementById('myChart');
+            //assemble data and launch chart
+            const data = {
+                labels: xlabels,
+                datasets: [{
+                    label: 'Time Taken to Complete Task',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: yvalues
+                }]
+            };
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {}
+            };
+            const myChart = new Chart(grapharea, config);
+        }
+
+
+    </script>
+
+
+    </script>
+</body>
+
+</html>

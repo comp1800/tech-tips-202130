@@ -43,7 +43,8 @@
     <div class="container">
         <nav class="navbar navbar-light bg-success">
             <div class="container-fluid">
-                <span class="navbar-brand mb-0 h1">MyMenu</span>
+                <span class="navbar-brand mb-0 h1">MyApp</span>
+                <span id="name-goes-here"> Friend </span>
             </div>
         </nav>
     </div>
@@ -68,6 +69,7 @@
     </div>
     <!-- end -->
 
+    <script src='./scripts/my_script.js'> </script>
     <script>
         function AddUploadListener(restaurantID) {
             const fileInput = document.getElementById(restaurantID + "menufile"); // pointer #1
@@ -80,12 +82,12 @@
                 //the change event returns a file "e.target.files[0]"
                 var pickedfile = e.target.files[0]
                 var fileURL = URL.createObjectURL(pickedfile);
-                
+
 
                 //change the DOM img element source to point to this file
                 image.src = fileURL; //assign the "src" property of the "img" tag
 
-                //create new menu item, 
+                //create new menu item,
                 //pass in restaurantID, and pointer to the menu file
                 RegisterNewMenu(restaurantID, pickedfile);
             })
@@ -154,15 +156,15 @@
 
             // Upload picked file to cloud storage
             storageRef.put(pickedfile, metadata)
-            .then(function(){
-                storageRef.getDownloadURL() //get URL of the uploade file
-                .then(function (url) { // Get URL of the uploaded file
-                    console.log(url); // Save the URL into users collection
-                    db.collection("menus").doc(menuid).update({
-                        "menupic": url
-                    })
-                })
-            }); 
+                .then(function () {
+                    storageRef.getDownloadURL() //get URL of the uploade file
+                        .then(function (url) { // Get URL of the uploaded file
+                            console.log(url); // Save the URL into users collection
+                            db.collection("menus").doc(menuid).update({
+                                "menupic": url
+                            })
+                        })
+                });
 
         }
 
@@ -184,7 +186,7 @@
                     })
                 })
         }
-        displayRestaurant("Whitespot");    
+        displayRestaurant("Whitespot");
         displayRestaurant("Sushitown");
     </script>
 </body>
