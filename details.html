@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+ 
+</head>
+
+<body>
+    <div class="container">
+        <h1>Details</h1>
+        <!-- Here is container for cards  -->
+        <div class="container">
+            <div id="details-go-here">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create a "max" number of hike document objects
+        function showDetails() {
+            // create a URL object
+            let params = new URL(window.location.href);
+            let id = params.searchParams.get("id");   //parse "id"
+            let collection = params.searchParams.get("collection");   //parse "id"
+            let message = "Collection is: " + collection;
+            message += "Document id is:  " + id;   //build a message to display
+            document.getElementById("details-go-here").innerHTML = message;   
+        }
+        showDetails();
+    </script>
+</body>
+</html>

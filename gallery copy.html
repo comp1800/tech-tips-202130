@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>1800-Tech-Tips</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
+    <!-- Material Design Bootstrap -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
+
+    <!-- Firebase 8 CDNs-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <!-- Chart.js -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Our own stuff -->
+    <link rel="stylesheet" href="./styles/my_style.css">
+    <script src="./scripts/firebaseAPI_TEAM99.js"></script>
+</head>
+
+<body>
+    <!-- Templates for general use, not displayed -->
+    <template id=hikeCardTemplate>
+        <div class="card py-2 mx-2" style="width: 18rem;">
+            <img src="./images/buntzenLake.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </template>
+    <template id="row3template">
+        <div class="row">
+            <div col="1" class="col">
+                1 of 3
+            </div>
+            <div col="2" class="col">
+                2 of 3
+            </div>
+            <div col="3" class="col">
+                3 of 3
+            </div>
+        </div>
+    </template>
+
+
+    <!-- Navbar -->
+    <div class="container">
+        <nav class="navbar navbar-light bg-success">
+            <div class="container-fluid">
+                <span class="navbar-brand mb-0 h1">MyApp</span>
+                <span id="name-goes-here"> Friend </span>
+            </div>
+        </nav>
+    </div>
+    <!-- List of Stuff -->
+    <div class="container py-3">
+        <h1>Your gallery</h1>
+        <!-- Here is container for cards  -->
+        <div class="container">
+            <div class="card-group" id="cards-go-here">
+            </div>
+        </div>
+
+    </div>
+    <!-- end -->
+    <script src='./scripts/my_script.js'></script>
+    <script>
+        function writeHikes() {
+            //define a variable for the collection you want to create in Firestore to populate data
+            var hikesRef = db.collection("hikes");
+
+            hikesRef.add({
+                code: "BBY01",
+                name: "Burnaby Lake Park Trail", //replace with your own city?
+                city: "Burnaby",
+                province: "BC",
+                level: "easy",
+                length: "10 km",
+                length_time: "2h 33mm"
+            });
+            hikesRef.add({
+                code: "AM01",
+                name: "Buntzen Lake Trail", //replace with your own city?
+                city: "Anmore",
+                province: "BC",
+                level: "moderate",
+                length: "10.5 km",
+                length_time: "3h 17mm"
+            });
+            hikesRef.add({
+                code: "NV01",
+                name: "Mount Seymoure Trail", //replace with your own city?
+                city: "North Vancouver",
+                province: "BC",
+                level: "hard",
+                length: "8.2 km",
+                length_time: "3h 20m"
+            });
+            hikesRef.add({
+                code: "NV01",
+                name: "Mount Seymoure Trail", //replace with your own city?
+                city: "North Vancouver",
+                province: "BC",
+                level: "hard",
+                length: "8.2 km",
+                length_time: "3h 20m"
+            });
+            hikesRef.add({
+                code: "NV01",
+                name: "Mount Seymoure Trail", //replace with your own city?
+                city: "North Vancouver",
+                province: "BC",
+                level: "hard",
+                length: "8.2 km",
+                length_time: "3h 20m"
+            });
+        }
+
+        //generates rows that have 3 columns
+        //enough to store all numItems
+        function generateGrid(numItems, itemsPerRow) {
+            var itemsPerRow = 3;
+            str = "";
+            var id = 1;
+            if (numItems <= itemsPerRow) {
+                maxRows = 1;
+            } else
+                maxRows = numItems / itemsPerRow;
+
+            for (rows = 0; rows <= maxRows; rows++) {
+                str += '<div class="row">';
+                for (cols = 0; cols <= itemsPerRow - 1; cols++) {
+                    if (id <= numItems) {
+                        str += '<div class="col-md-4 py-2" id="hike' + id++ + '"> '
+                        //str += '<img src="./images/buntzenLake.jpg" class="card-img-top">';
+                        str += '</div>'
+                    }
+                }
+                str += "</div>";
+            }
+            document.getElementById("cards-go-here").innerHTML = str;
+        }
+        generateGrid(15, 3);
+
+        //generates rows that have 3 columns
+        //enough to store all numItems
+        function genGrid(numItems) {
+            var itemsPerRow = 3;
+            var i=1;
+
+            // do all rows except the last one
+            for (rows = 1; rows < numItems / itemsPerRow; rows++) {
+                //clone template row
+                //give it a hikeid
+                //attach to cards-go-here
+                console.log("generate first row");
+                let row = document.querySelector("#row3template").content.cloneNode(true);
+                //console.log(row);
+                row.childNodes[0].id = "hike" + i++;
+                row.childNodes[1].id = "hike" + i++;
+                row.childNodes[2].id = "hike" + i++;
+                //console.log(row);
+                document.getElementById("cards-go-here").appendChild(row);
+            }
+            // do the final row, with possible items sticking out
+            if (numItems % itemsPerRow == 1) {
+                //clone regular row
+            } else if (numItems % itemsPerRow == 2) {
+                //clone 2 item row
+            } else {}
+            //clone 1 item row
+            //attach to cards-go-here
+        }
+        //genGrid(5);
+
+
+        function displayHikes() {
+            let hikeCardTemplate = document.getElementById("hikeCardTemplate");
+            let hikeCardGroup = document.getElementById("hikeCardGroup");
+
+            db.collection("Hikes").get()
+                .then(allHikes => {
+                    generateGrid(allHikes.size, 3);
+                    var i = 1;
+                    allHikes.forEach(doc => {
+                        var hikeName = doc.data().name; //gets the name field
+                        var hikeID = doc.data().code; //gets the unique ID field
+                        var hikeLength = doc.data().length; //gets the length field
+                        var hikeCity = doc.data().city; //gets the city field
+                        let testHikeCard = hikeCardTemplate.content.cloneNode(true);
+                        testHikeCard.querySelector('.card-title').innerHTML = hikeName;
+                        testHikeCard.querySelector('.card-text').innerHTML = "This hike is " + hikeLength +
+                            " long.";
+                        //testHikeCard.querySelector('a').onclick = () => setHikeData(hikeID);
+                        //testHikeCard.querySelector('img').src = `./images/${hikeID}.jpg`;
+
+                        document.getElementById("hike" + i).appendChild(testHikeCard);
+                        i++;
+                    })
+                })
+        }
+        displayHikes();
+    </script>
+
+
+</body>
+
+</html>

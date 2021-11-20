@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
     <!-- Required meta tags -->
@@ -32,18 +32,20 @@
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
+    <!-- Chart.js -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Our own stuff -->
-    <link rel="stylesheet" href="./styles/my_bootstrap.css">
     <link rel="stylesheet" href="./styles/my_style.css">
     <script src="./scripts/firebaseAPI_TEAM99.js"></script>
-
 </head>
 
 <body>
+    <!-- Templates for general use, not displayed -->
 
-    <!-------------------------------------->
-    <!-- The following is HTML for layout -->
-    <!-------------------------------------->
+
+
+    <!-- Navbar -->
     <div class="container">
         <nav class="navbar navbar-light bg-success">
             <div class="container-fluid">
@@ -52,24 +54,45 @@
             </div>
         </nav>
     </div>
-
-    <div class="container-fluid bg-dark text-light p-5">
-        <div class="container bg-dark p-5">
-            <h1 class="display-4">Good morning, <span id="name-goes-here"></span></h1>
-            <hr>
-            <p>Quote of the day: <span id="quote-goes-here"></span></p>
+    <!-- List of Stuff -->
+    <div class="container py-3">
+        <h1>Your gallery</h1>
+        <div class="container">
+            <div class="row row-cols-auto">
+                <div class="col">
+                    <div class="card py-2 mx-2" style="width: 15rem;">
+                        <img src="./images/buntzenLake.jpg" class="card-img-top" alt="...">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card py-2 mx-2" style="width: 15rem;">
+                        <img src="./images/buntzenLake.jpg" class="card-img-top" alt="...">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card py-2 mx-2" style="width: 15rem;">
+                        <img src="./images/buntzenLake.jpg" class="card-img-top" alt="...">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card py-2 mx-2" style="width: 15rem;">
+                        <img src="./images/buntzenLake.jpg" class="card-img-top" alt="...">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card py-2 mx-2" style="width: 15rem;">
+                        <img src="./images/buntzenLake.jpg" class="card-img-top" alt="...">
+                    </div>
+                </div>
+            </div>
         </div>
-        <a href="restaurants.html" class="btn btn-success">Go to Restaurants</a>
-        <a href="graph.html" class="btn btn-success">Go to Graph</a>
-        <a href="map.html" class="btn btn-success">Go to Map</a>
 
     </div>
-
-    <!--------------------------------------------------------------------->
-    <!-- JS files: Your own JavaScript functions included here    -->
-    <!--------------------------------------------------------------------->
-
+    <!-- end -->
     <script src='./scripts/my_script.js'></script>
+    <script>
+
+    </script>
 
 
 </body>
