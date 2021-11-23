@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
     <!-- Required meta tags -->
@@ -32,18 +32,17 @@
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
+    <!-- Chart.js -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Our own stuff -->
-    <link rel="stylesheet" href="./styles/my_bootstrap.css">
     <link rel="stylesheet" href="./styles/my_style.css">
     <script src="./scripts/firebaseAPI_TEAM99.js"></script>
-
 </head>
 
 <body>
 
-    <!-------------------------------------->
-    <!-- The following is HTML for layout -->
-    <!-------------------------------------->
+    <!-- Navbar -->
     <div class="container">
         <nav class="navbar navbar-light bg-success">
             <div class="container-fluid">
@@ -52,36 +51,62 @@
             </div>
         </nav>
     </div>
+    <!-- List of Stuff -->
+    <div class="container py-3">
+        <h3>My Friends</h3>
+        <!--The div element for the map -->
+        <!-- <input class="btn btn-success" value="Chat Samsantech" onclick="chat('samsantech')"> -->
 
-    <div class="container-fluid bg-dark text-light p-5">
-        <div class="container bg-dark p-5">
-            <h1 class="display-4">Good morning, <span id="name-goes-here"></span></h1>
-            <hr>
-            <p>Quote of the day: <span id="quote-goes-here"></span></p>
+        <!-- <input id="username" type="text" placeholder="Enter name"><br/> -->
+        <div id="friends-go-here" class="container">
+
         </div>
-        <a href="restaurants.html" class="btn btn-success">Go to Restaurants</a>
-        <a href="graph.html" class="btn btn-success">Go to Graph</a>
-        <a href="chat.html" class="btn btn-success">Go to Chat</a>
-        <input class="btn btn-success" value="Logout" onclick="logout()">
 
     </div>
 
-    <!--------------------------------------------------------------------->
-    <!-- JS files: Your own JavaScript functions included here    -->
-    <!--------------------------------------------------------------------->
+    <!-- template for one item -->
+    <template id="card-template">
+        <div class="card"></div>
+        <div class="container item">
+            <b class="card-name"> Name</b>
+            <a class="btn card-href">CHAT</a>
+        </div>
+        </div>
+    </template>
+    <!-- end -->
+
 
     <script src='./scripts/my_script.js'></script>
 
     <script>
-        function logout() {
-            alert("logging out now");
-            firebase.auth().signOut().then(() => {
-                // Sign-out successful.
-                window.location.href = "index.html";
-            }).catch((error) => {
-                // An error happened.
-            });
+        //----------------------------------------------
+        // Show is list of all users EXCEPT me (who is logged in)
+        //----------------------------------------------
+        function showAllUsers() {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    myid = user.uid;
+                    db.collection("users").get()
+                        .then(snap => {
+                            snap.forEach(doc => {
+                                if (doc.id != myid) {
+                                    let newCard = document.getElementById("card-template")
+                                        .content.cloneNode(true);
+                                    newCard.querySelector('.card-name').innerHTML = doc.data().name;
+                                    newCard.querySelector('.card-href').href = "chat.html?uid=" +
+                                        doc.id + "&name=" + doc.data().name;  //pass name and id
+                                    document.getElementById("friends-go-here").appendChild(newCard);
+                                }
+                            })
+                        })
+
+                } else {
+                    // No user is signed in.
+                    console.log("no user signed in");
+                }
+            })
         }
+        showAllUsers();
     </script>
 
 </body>
