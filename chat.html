@@ -103,8 +103,7 @@
             //set the title to show that person's name
             document.getElementById("friend").innerHTML = name;
 
-            // firebase.auth().onAuthStateChanged(function (user) {
-
+            // generate a random 4 digit ID
             chatid = Math.random().toString().substr(2, 4);
             console.log(chatid);
             db.collection("chats").doc(chatid).set({
@@ -116,7 +115,6 @@
                 listenNewMessage(chatid);
                 quitButtonListen(chatid);
             })
-            // })
         }
         initChat();
 

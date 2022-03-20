@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
     <!-- Required meta tags -->
@@ -32,61 +32,45 @@
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
+    <!-- Chart.js -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Our own stuff -->
-    <link rel="stylesheet" href="./styles/my_bootstrap.css">
     <link rel="stylesheet" href="./styles/my_style.css">
     <script src="./scripts/firebaseAPI_TEAM99.js"></script>
-
 </head>
 
 <body>
 
-    <!-------------------------------------->
-    <!-- The following is HTML for layout -->
-    <!-------------------------------------->
+    <!-- Button trigger modal -->
     <div class="container">
-        <nav class="navbar navbar-light bg-success">
-            <div class="container-fluid">
-                <span class="navbar-brand mb-0 h1">MyApp</span>
-                <span id="name-goes-here"> Friend </span>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Post </button>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Report</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to submit this report?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="writeReview()">Save changes</button>
+                </div>
             </div>
-        </nav>
-    </div>
-
-    <div class="container-fluid bg-dark text-light p-5">
-        <div class="container bg-dark p-5">
-            <h1 class="display-4">Good morning, <span id="name-goes-here"></span></h1>
-            <hr>
-            <p>Quote of the day: <span id="quote-goes-here"></span></p>
         </div>
-        <a href="restaurants.html" class="btn btn-success">Go to Restaurants</a>
-        <a href="graph.html" class="btn btn-success">Go to Graph</a>
-        <a href="chat.html" class="btn btn-success">Go to Chat</a>
-        <a href="forms.html" class="btn btn-success">Go to Forms</a>
-        <a href="profile.html" class="btn btn-success">Go to Profiles</a>
-        <a href="toggle.html" class="btn btn-success">Go to Toggles</a>
-        <a href="parking.html" class="btn btn-success">Go to Parking</a>
-
-
-        <input class="btn btn-success" value="Logout" onclick="logout()">
-
     </div>
-
-    <!--------------------------------------------------------------------->
-    <!-- JS files: Your own JavaScript functions included here    -->
-    <!--------------------------------------------------------------------->
-
-    <script src='./scripts/my_script.js'></script>
 
     <script>
-        function logout() {
-            alert("logging out now");
-            firebase.auth().signOut().then(() => {
-                // Sign-out successful.
-                window.location.href = "index.html";
-            }).catch((error) => {
-                // An error happened.
-            });
+        function writeReview(){
+            alert("Inside writeReview!");
         }
     </script>
 

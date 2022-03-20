@@ -157,6 +157,8 @@
             // Upload picked file to cloud storage
             storageRef.put(pickedfile, metadata)
                 .then(function () {
+                    console.log("uploaded menu");
+                    alert ("uploaded image");
                     storageRef.getDownloadURL() //get URL of the uploade file
                         .then(function (url) { // Get URL of the uploaded file
                             console.log(url); // Save the URL into users collection

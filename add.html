@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Budgeting APP</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Bootstrap FirebaseUI CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+
+    <!-- Firebase 8 CDNs-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+
+    <!--Style sheet-->
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <!-- Google icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Link to api keys for firebase -->
+    <script src="./scripts/firebaseAPI_TEAM99.js"></script>
+
+    <style>
+        #form-grid {
+            display: grid;
+            grid-template-columns: 2vw 24vw 23vw 2vw 23vw 24vw 2vw;
+            grid-template-rows: 5vh 10vh 5vh 15vh 5vh 10vh 10vh 5vh;
+        }
+
+        #titleField {
+            grid-column: 2 / 7;
+            grid-row: 2;
+        }
+
+        #amountField {
+            grid-column: 2 / 5;
+            grid-row: 4;
+        }
+
+        #radioField {
+            grid-column: 6;
+            grid-row: 4;
+            justify-self: center;
+            align-self: center;
+            align-items: center;
+            justify-items: center;
+        }
+
+        #categoryField {
+            grid-column: 2 / 4;
+            grid-row: 6;
+        }
+
+        #frequencyField {
+            grid-column: 5 / 7;
+            grid-row: 6;
+            justify-self: center;
+        }
+
+        #submitButton {
+            grid-column: 2 / 7;
+            grid-row: 8;
+        }
+
+        label {
+            font-size: 2.5vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="topbar">
+        <!-- <img src="images/mainpage.png" width="15%" alt="logo" /> -->
+        <a style="color: black;" href="main.html" class="material-icons goRight">home</a>
+    </div>
+    <form id="form-grid">
+        <!--Title text field-->
+        <div class="form-group" id="titleField">
+            <label for="Title">Title</label>
+            <input type="text" class="form-control" id="Title" placeholder="Optional">
+        </div>
+        <!--Amount text field-->
+        <div class="form-group" id="amountField">
+            <label for="Amount">Amount</label>
+            <input type="text" class="form-control" placeholder="$0.00" id="Amount">
+        </div>
+        <!--Income Outcome Radio Buttons-->
+        <div id="radioField">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="IncomeOutcome" id="inlineRadio1" value="Income" checked>
+                <label class="form-check-label" for="inlineRadio1">Income</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="IncomeOutcome" id="inlineRadio2"
+                    value="Outcome">
+                <label class="form-check-label" for="inlineRadio2">Outcome</label>
+            </div>
+        </div>
+        <!--Supposed to be Categories, does nothing right now-->
+        <div class="btn-group" id="categoryField">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Action
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
+        </div>
+        <!--Frequency select field-->
+        <div id="frequencyField">
+            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="Frequency">
+                <option value="One Time">One Time</option>
+                <option value="Weekly">Weekly</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Yearly">Yearly</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submitButton" onclick="addTransaction()">Submit</button>
+    </form>
+
+    <div class="fixed-bottom" id="botNav">
+        <footer class="navbar justify-content-evenly bg-white fixed-bottom">
+            <a href="categories.html" class="material-icons">category</a>
+            <a href="reports.html" class="material-icons">bar_chart</a>
+            <a href="add.html" class="material-icons">add_circle</a>
+            <a href="goals.html" class="material-icons">outlined_flag</a>
+            <a href="profile.html" class="material-icons">person</a>
+        </footer>
+    </div>
+
+
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+
+    <script>
+        function addTransaction() {
+            alert ("in addTransaction!");
+            let Amount = document.getElementById("Amount").value;
+            let Frequency = document.getElementById("Frequency").value;
+            // let Category = document.getElementById("Category").value;
+            let Title = document.getElementById("Title").value;
+
+            let Direction = document.querySelector("input[name='IncomeOutcome']:checked").value;
+
+            console.log(Direction);
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    alert("User is signed in");
+                    var currentUser = db.collection("users").doc(user.uid).collection("transactions");
+
+                    alert("Line 174 " + user.uid);
+                    currentUser.add({
+                        Amount: Amount,
+                        // Catgeory: Category,
+                        Frequency: Frequency,
+                        Title: Title,
+                        Timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        //Direction: Direction
+                        // date: automatic
+                    }).then((docRef) => {
+                        alert(docRef.id + " added.");
+                    });
+
+                } else {
+                    console.log("no user signed in");
+                }
+            });
+        }
+        addTransaction();
+    </script>
+</body>
+
+</html>
